@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les Pourcentages en Commerce — TechStyle</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1D9E75; --green-dark: #0F6E56; --green-light: #E1F5EE;
+    --blue: #185FA5; --blue-light: #E6F1FB;
+    --amber: #BA7517; --amber-light: #FAEEDA;
+    --pink: #993556; --pink-light: #FBEAF0;
+    --purple: #534AB7; --purple-light: #EEEDFE;
+    --red: #A32D2D; --red-light: #FCEBEB;
+    --teal: #0F6E56; --teal-light: #E1F5EE;
+    --gray: #5F5E5A; --gray-light: #F1EFE8;
+    --text: #1a1a18; --text-sec: #6b6b67; --text-hint: #9a9a95;
+    --border: rgba(0,0,0,0.10); --border-med: rgba(0,0,0,0.16);
+    --bg: #f9f8f5; --surface: #ffffff; --surface2: #f4f3ef;
+    --radius: 12px; --radius-sm: 8px;
+    --shadow: 0 1px 4px rgba(0,0,0,0.07), 0 0 0 0.5px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6; min-height: 100vh; }
+
+  /* LAYOUT */
+  .app { max-width: 820px; margin: 0 auto; padding: 0 16px 60px; }
+
+  /* HEADER */
+  .site-header { background: var(--surface); border-bottom: 0.5px solid var(--border-med); padding: 0 16px; position: sticky; top: 0; z-index: 100; }
+  .header-inner { max-width: 820px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 56px; gap: 16px; }
+  .logo { font-size: 15px; font-weight: 600; color: var(--green-dark); letter-spacing: -0.3px; }
+  .logo span { font-weight: 400; color: var(--text-sec); }
+  .progress-wrap { flex: 1; max-width: 320px; }
+  .progress-track { background: var(--surface2); border-radius: 20px; height: 6px; overflow: hidden; }
+  .progress-fill { background: var(--green); height: 6px; border-radius: 20px; transition: width 0.5s cubic-bezier(.4,0,.2,1); width: 0%; }
+  .progress-text { font-size: 12px; color: var(--text-hint); margin-top: 3px; text-align: right; }
+
+  /* SCREENS */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* INTRO */
+  .intro-hero { text-align: center; padding: 48px 24px 36px; }
+  .store-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--green-light); color: var(--green-dark); font-size: 13px; font-weight: 500; padding: 6px 14px; border-radius: 30px; margin-bottom: 20px; }
+  .intro-hero h1 { font-size: 32px; font-weight: 600; color: var(--text); letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 12px; }
+  .intro-hero p { font-size: 15px; color: var(--text-sec); max-width: 480px; margin: 0 auto 28px; }
+  .parts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; max-width: 680px; margin: 0 auto 32px; }
+  .part-chip { background: var(--surface); border: 0.5px solid var(--border-med); border-radius: var(--radius-sm); padding: 12px; text-align: center; }
+  .part-chip .pc-num { font-size: 11px; color: var(--text-hint); margin-bottom: 4px; }
+  .part-chip .pc-name { font-size: 13px; font-weight: 500; }
+
+  /* SECTION CARD */
+  .section-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 24px; margin: 20px 0; }
+
+  /* TAGS */
+  .tag { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 30px; margin-bottom: 12px; }
+  .tag-tva { background: var(--blue-light); color: var(--blue); }
+  .tag-remise { background: var(--green-light); color: var(--green-dark); }
+  .tag-marge { background: var(--amber-light); color: var(--amber); }
+  .tag-evolution { background: var(--pink-light); color: var(--pink); }
+  .tag-arrondi { background: var(--gray-light); color: #3a3a38; }
+  .tag-synthese { background: var(--purple-light); color: var(--purple); }
+
+  .section-title { font-size: 19px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 4px; }
+  .section-desc { font-size: 14px; color: var(--text-sec); margin-bottom: 18px; line-height: 1.6; }
+
+  /* FORMULA BOX */
+  .formula { background: #f0fdf7; border: 0.5px solid #9FE1CB; border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 18px; }
+  .formula-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: var(--green-dark); margin-bottom: 8px; }
+  .formula-row { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text); padding: 2px 0; line-height: 1.7; }
+  .formula-note { font-size: 12px; color: var(--text-hint); margin-top: 6px; }
+
+  /* ARRONDI BOX */
+  .arrondi-box { background: #f8f7f2; border: 0.5px solid #D3D1C7; border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 18px; }
+  .arrondi-box .formula-title { color: #3a3a38; }
+  .arrondi-rule { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text); padding: 3px 0; }
+  .arrondi-rule .rule-badge { min-width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; background: #D3D1C7; color: #2C2C2A; }
+
+  /* QUESTIONS */
+  .q-block { margin-bottom: 20px; border-bottom: 0.5px solid var(--border); padding-bottom: 20px; }
+  .q-block:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .q-num { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-hint); margin-bottom: 5px; }
+  .q-label { font-size: 14px; color: var(--text); margin-bottom: 10px; line-height: 1.6; }
+  .q-label strong { color: var(--text); font-weight: 600; }
+  .q-input-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .q-input-row label { font-size: 13px; color: var(--text-sec); }
+  input[type=number] { width: 150px; padding: 9px 12px; border: 0.5px solid var(--border-med); border-radius: var(--radius-sm); font-family: 'DM Mono', monospace; font-size: 14px; color: var(--text); background: var(--surface); outline: none; transition: border-color 0.15s; -moz-appearance: textfield; }
+  input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+  input[type=number]:focus { border-color: var(--green); }
+  input[type=number].correct { border-color: var(--green); background: var(--green-light); }
+  input[type=number].wrong { border-color: var(--red); background: var(--red-light); }
+  .unit { font-size: 13px; color: var(--text-sec); font-family: 'DM Mono', monospace; }
+  .hint { font-size: 12px; color: var(--text-hint); margin-top: 6px; font-style: italic; }
+
+  /* BUTTONS */
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; border: 0.5px solid var(--border-med); background: var(--surface); color: var(--text); transition: all 0.15s; text-decoration: none; }
+  .btn:hover { background: var(--surface2); }
+  .btn-primary { background: var(--green); color: white; border-color: var(--green); }
+  .btn-primary:hover { background: var(--green-dark); border-color: var(--green-dark); }
+  .btn-ghost { background: transparent; border-color: transparent; color: var(--text-sec); }
+  .btn-ghost:hover { background: var(--surface2); }
+  .nav-row { display: flex; align-items: center; justify-content: space-between; margin-top: 24px; gap: 12px; }
+  .nav-step { font-size: 13px; color: var(--text-hint); }
+
+  /* RESULTS */
+  .score-hero { text-align: center; padding: 36px 24px 28px; }
+  .score-circle { width: 110px; height: 110px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column; margin: 0 auto 16px; border: 3px solid var(--green); }
+  .score-pct { font-size: 30px; font-weight: 600; color: var(--green-dark); }
+  .score-sub { font-size: 12px; color: var(--text-hint); }
+  .mention-text { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+  .note-text { font-size: 14px; color: var(--text-sec); }
+  .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0; }
+  .stat-box { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-sm); padding: 14px; text-align: center; }
+  .stat-val { font-size: 22px; font-weight: 600; }
+  .stat-lbl { font-size: 12px; color: var(--text-hint); margin-top: 2px; }
+  .stat-box.s-green .stat-val { color: var(--green-dark); }
+  .stat-box.s-red .stat-val { color: var(--red); }
+  .stat-box.s-amber .stat-val { color: var(--amber); }
+
+  /* CORRECTION */
+  .correction-list { display: flex; flex-direction: column; gap: 10px; }
+  .corr-item { border: 0.5px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+  .corr-item.ok { border-color: #9FE1CB; background: #f6fef9; }
+  .corr-item.ko { border-color: #F7C1C1; background: #fef9f9; }
+  .corr-item.skip { border-color: var(--border); background: var(--surface2); }
+  .corr-qnum { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-hint); margin-bottom: 4px; }
+  .corr-qlabel { font-size: 13px; color: var(--text-sec); margin-bottom: 6px; }
+  .corr-your { font-size: 13px; margin-bottom: 2px; }
+  .corr-your.ok-mark { color: var(--green-dark); font-weight: 500; }
+  .corr-your.ko-mark { color: var(--red); }
+  .corr-answer { font-size: 13px; color: var(--green-dark); font-weight: 500; }
+  .corr-expl { font-size: 12px; color: var(--text-hint); margin-top: 4px; font-family: 'DM Mono', monospace; }
+
+  .section-divider { border: none; border-top: 0.5px solid var(--border); margin: 10px 0; }
+
+  .err-msg { font-size: 13px; color: var(--red); margin-top: 10px; text-align: right; min-height: 20px; font-weight: 500; }
+  @media (max-width: 520px) {
+    .intro-hero h1 { font-size: 24px; }
+    .parts-grid { grid-template-columns: 1fr 1fr; }
+    .stats-row { grid-template-columns: 1fr; }
+    .header-inner { flex-wrap: wrap; height: auto; padding: 10px 0; }
+    .progress-wrap { max-width: 100%; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">TechStyle <span>— Les Pourcentages</span></div>
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-text" id="progressText">Prêt(e) à commencer</div>
+    </div>
+  </div>
+</header>
+
+<!-- ======= INTRO ======= -->
+<div class="app">
+<div class="screen active" id="screen-intro">
+  <div class="intro-hero">
+    <div class="store-badge">&#127978; Magasin TechStyle</div>
+    <h1>Maîtrise les pourcentages<br>en commerce</h1>
+    <p>Tu es assistant(e) commercial(e) chez TechStyle. Ton patron te confie 6 missions du quotidien. Les formules sont données — c'est à toi de jouer !</p>
+    <div class="parts-grid">
+      <div class="part-chip"><div class="pc-num">Partie 1</div><div class="pc-name" style="color:var(--blue)">TVA</div></div>
+      <div class="part-chip"><div class="pc-num">Partie 2</div><div class="pc-name" style="color:var(--green-dark)">Remises</div></div>
+      <div class="part-chip"><div class="pc-num">Partie 3</div><div class="pc-name" style="color:var(--amber)">Marges</div></div>
+      <div class="part-chip"><div class="pc-num">Partie 4</div><div class="pc-name" style="color:var(--pink)">Évolution</div></div>
+      <div class="part-chip"><div class="pc-num">Partie 5</div><div class="pc-name" style="color:#3a3a38">Arrondis</div></div>
+      <div class="part-chip"><div class="pc-num">Partie 6</div><div class="pc-name" style="color:var(--purple)">Synthèse</div></div>
+    </div>
+    <p style="font-size:13px;color:var(--text-hint);margin-bottom:24px;">27 questions &nbsp;·&nbsp; environ 1 heure &nbsp;·&nbsp; correction à la fin</p>
+    <p style="font-size:13px;color:var(--text-sec);margin-bottom:24px;font-weight:500;letter-spacing:0.3px;">&#128203; Exercice réalisé par <strong>LEGER Isabelle</strong></p>
+    <button class="btn btn-primary" onclick="goTo('screen-p1')" style="font-size:15px;padding:12px 28px;">Commencer la mission &#8594;</button>
+  </div>
+</div>
+
+<!-- ======= PARTIE 1 : TVA ======= -->
+<div class="screen" id="screen-p1">
+  <div class="section-card">
+    <span class="tag tag-tva">&#128176; Partie 1 / 6 — TVA</span>
+    <div class="section-title">Calculer la TVA</div>
+    <div class="section-desc">TechStyle vend des vêtements et de l'électronique avec différents taux de TVA. Ton rôle : vérifier les étiquettes et établir les factures.</div>
+    <div class="formula">
+      <div class="formula-title">Formules à retenir</div>
+      <div class="formula-row">Prix TTC = Prix HT × (1 + taux TVA)</div>
+      <div class="formula-row">Prix HT = Prix TTC ÷ (1 + taux TVA)</div>
+      <div class="formula-row">Montant TVA = Prix HT × taux TVA</div>
+      <div class="formula-note">Taux courants : 20 % (général) · 10 % (restauration) · 5,5 % (alimentaire)</div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 1</div>
+      <div class="q-label">Un jean est vendu <strong>49,00 € HT</strong>. Taux de TVA : <strong>20 %</strong>. Quel est le <strong>prix TTC</strong> ?</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q1"><span class="unit">€</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 2</div>
+      <div class="q-label">Une paire de baskets coûte <strong>96,00 € TTC</strong> (TVA 20 %). Quel est le <strong>prix HT</strong> ?</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q2"><span class="unit">€</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 3</div>
+      <div class="q-label">Un sandwich vendu en boutique est affiché <strong>4,40 € TTC</strong> (TVA 10 %). Quel est le <strong>montant de la TVA</strong> ?</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q3"><span class="unit">€</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 4</div>
+      <div class="q-label">Un téléphone est vendu <strong>360 € HT</strong> (TVA 20 %). Quel est le <strong>montant de la TVA</strong> ?</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q4"><span class="unit">€</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 5</div>
+      <div class="q-label">Une chemise est à <strong>36 € TTC</strong> avec une TVA de <strong>20 %</strong>. Calcule le <strong>prix HT</strong> et le <strong>montant TVA</strong>.</div>
+      <div class="q-input-row">
+        <label>HT :</label><input type="number" step="0.01" id="q5a" style="width:130px"><span class="unit">€</span>
+        &nbsp;&nbsp;<label>TVA :</label><input type="number" step="0.01" id="q5b" style="width:130px"><span class="unit">€</span>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <span class="nav-step">Partie 1 sur 6</span>
+      <button class="btn btn-primary" onclick="tryNext('screen-p2',['q1','q2','q3','q4','q5a','q5b'])">Suivant &#8594;</button>
+    </div>
+    <div class="err-msg" id="err-p1"></div>
+  </div>
+</div>
+
+<!-- ======= PARTIE 2 : REMISES ======= -->
+<div class="screen" id="screen-p2">
+  <div class="section-card">
+    <span class="tag tag-remise">&#127985; Partie 2 / 6 — Remises & promotions</span>
+    <div class="section-title">Les soldes arrivent !</div>
+    <div class="section-desc">TechStyle organise ses soldes d'été. Tu dois calculer les nouveaux prix pour les étiquettes et répondre aux clients.</div>
+    <div class="formula">
+      <div class="formula-title">Formules à retenir</div>
+      <div class="formula-row">Montant remise = Prix initial × taux de remise</div>
+      <div class="formula-row">Prix après remise = Prix initial × (1 − taux)</div>
+      <div class="formula-row">Taux de remise = (Remise ÷ Prix initial) × 100</div>
+      <div class="formula-note">Astuce : −30 % → multiplier par 0,70 · −15 % → × 0,85</div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 6</div>
+      <div class="q-label">Un manteau est à <strong>120 € HT</strong>. Le patron applique une remise de <strong>15 %</strong>. Quel est le <strong>nouveau prix HT</strong> ?</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q6"><span class="unit">€</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 7</div>
+      <div class="q-label">Un client négocie une remise de <strong>8 €</strong> sur un article à <strong>64 € HT</strong>. Quel est le <strong>taux de remise</strong> accordé ?</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q7"><span class="unit">%</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 8</div>
+      <div class="q-label">Une veste soldée à <strong>−25 %</strong> est maintenant à <strong>75 € HT</strong>. Quel était le <strong>prix initial HT</strong> ?</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q8"><span class="unit">€</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 9</div>
+      <div class="q-label">Remises successives : un article à <strong>200 € HT</strong> bénéficie d'abord de <strong>10 %</strong>, puis de <strong>5 %</strong> supplémentaires. Quel est le <strong>prix final HT</strong> ?</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q9"><span class="unit">€</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 10</div>
+      <div class="q-label">Un sac à <strong>55 € HT</strong> avec <strong>20 % de remise</strong>. Quel sera le <strong>prix TTC</strong> payé par le client ? (TVA 20 %)</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q10"><span class="unit">€</span></div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-ghost" onclick="goTo('screen-p1')">&#8592; Retour</button>
+      <span class="nav-step">Partie 2 sur 6</span>
+      <button class="btn btn-primary" onclick="tryNext('screen-p3',['q6','q7','q8','q9','q10'])">Suivant &#8594;</button>
+    </div>
+    <div class="err-msg" id="err-p2"></div>
+  </div>
+</div>
+
+<!-- ======= PARTIE 3 : MARGES ======= -->
+<div class="screen" id="screen-p3">
+  <div class="section-card">
+    <span class="tag tag-marge">&#128200; Partie 3 / 6 — PA, Marge & Taux de marque</span>
+    <div class="section-title">Le coin des calculs pro</div>
+    <div class="section-desc">Tu dois aider le responsable à fixer les prix de vente des nouveaux articles et analyser la rentabilité du magasin.</div>
+    <div class="formula">
+      <div class="formula-title">Formules à retenir</div>
+      <div class="formula-row">Marge brute = PVHT − PAHT</div>
+      <div class="formula-row">Taux de marge = (Marge ÷ PAHT) × 100</div>
+      <div class="formula-row">Taux de marque = (Marge ÷ PVHT) × 100</div>
+      <div class="formula-row">PVHT = PAHT ÷ (1 − taux de marque)</div>
+      <div class="formula-note">⚠ Taux de marge : base = PA &nbsp;|&nbsp; Taux de marque : base = PV</div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 11</div>
+      <div class="q-label">TechStyle achète un t-shirt <strong>12 € HT</strong> et le revend <strong>30 € HT</strong>. Calcule la <strong>marge brute</strong>.</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q11"><span class="unit">€</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 12</div>
+      <div class="q-label">Sur ce même t-shirt, calcule le <strong>taux de marge</strong>.</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q12"><span class="unit">%</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 13</div>
+      <div class="q-label">Et le <strong>taux de marque</strong> de ce t-shirt ?</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q13"><span class="unit">%</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 14</div>
+      <div class="q-label">Un accessoire est acheté <strong>25 € HT</strong>. Le responsable veut un <strong>taux de marque de 40 %</strong>. Quel doit être le <strong>PVHT</strong> ?</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q14"><span class="unit">€</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 15</div>
+      <div class="q-label">Une casquette est vendue <strong>22 € HT</strong> avec une marge de <strong>10 €</strong>. Quel est le <strong>prix d'achat HT</strong> ?</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q15"><span class="unit">€</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 16</div>
+      <div class="q-label">Un article a un <strong>taux de marge de 60 %</strong> et un PA de <strong>20 € HT</strong>. Quel est son <strong>PVHT</strong> ?</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q16"><span class="unit">€</span></div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-ghost" onclick="goTo('screen-p2')">&#8592; Retour</button>
+      <span class="nav-step">Partie 3 sur 6</span>
+      <button class="btn btn-primary" onclick="tryNext('screen-p4',['q11','q12','q13','q14','q15','q16'])">Suivant &#8594;</button>
+    </div>
+    <div class="err-msg" id="err-p3"></div>
+  </div>
+</div>
+
+<!-- ======= PARTIE 4 : TAUX D'EVOLUTION ======= -->
+<div class="screen" id="screen-p4">
+  <div class="section-card">
+    <span class="tag tag-evolution">&#128202; Partie 4 / 6 — Taux d'évolution</span>
+    <div class="section-title">Les chiffres du magasin évoluent</div>
+    <div class="section-desc">Le directeur veut analyser les performances du magasin sur l'année. Il te donne des données et te demande de calculer les évolutions.</div>
+    <div class="formula">
+      <div class="formula-title">Formules à retenir</div>
+      <div class="formula-row">Taux d'évolution = ((VF − VI) ÷ VI) × 100</div>
+      <div class="formula-row">Valeur finale = VI × (1 + taux)</div>
+      <div class="formula-row">Valeur initiale = VF ÷ (1 + taux)</div>
+      <div class="formula-note">Résultat positif = hausse · Résultat négatif = baisse</div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 17</div>
+      <div class="q-label">Le CA de janvier était <strong>8 500 €</strong>. En février, il passe à <strong>9 350 €</strong>. Quel est le <strong>taux d'évolution</strong> ?</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q17"><span class="unit">%</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 18</div>
+      <div class="q-label">Le nombre de clients était de <strong>240</strong> en mars. Il a <strong>baissé de 12,5 %</strong> en avril. Combien y a-t-il de clients en avril ?</div>
+      <div class="q-input-row"><input type="number" id="q18"><span class="unit">clients</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 19</div>
+      <div class="q-label">Le stock actuel est de <strong>1 260 articles</strong> après une hausse de <strong>5 %</strong>. Quel était le <strong>stock initial</strong> ?</div>
+      <div class="q-input-row"><input type="number" id="q19"><span class="unit">articles</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 20</div>
+      <div class="q-label">Ventes de mai : <strong>3 200 €</strong>. Juin : <strong>2 880 €</strong>. Juillet : hausse de <strong>15 %</strong> par rapport à juin. Quel est le <strong>CA de juillet</strong> ?</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q20"><span class="unit">€</span></div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-ghost" onclick="goTo('screen-p3')">&#8592; Retour</button>
+      <span class="nav-step">Partie 4 sur 6</span>
+      <button class="btn btn-primary" onclick="tryNext('screen-p5',['q17','q18','q19','q20'])">Suivant &#8594;</button>
+    </div>
+    <div class="err-msg" id="err-p4"></div>
+  </div>
+</div>
+
+<!-- ======= PARTIE 5 : ARRONDIS ======= -->
+<div class="screen" id="screen-p5">
+  <div class="section-card">
+    <span class="tag tag-arrondi">&#127919; Partie 5 / 6 — Les arrondis</span>
+    <div class="section-title">Arrondir comme un pro</div>
+    <div class="section-desc">En commerce, on arrondit toujours les résultats selon des règles précises. Les prix, montants de TVA et marges doivent être exprimés avec le bon nombre de décimales.</div>
+    <div class="arrondi-box">
+      <div class="formula-title">Règles d'arrondi</div>
+      <div class="arrondi-rule"><div class="rule-badge">1</div><span>Chiffre &lt; 5 après la virgule → on <strong>descend</strong> (on laisse le chiffre précédent)</span></div>
+      <div class="arrondi-rule"><div class="rule-badge">2</div><span>Chiffre ≥ 5 après la virgule → on <strong>monte</strong> (on augmente le chiffre précédent de 1)</span></div>
+      <div class="arrondi-rule"><div class="rule-badge">3</div><span>En commerce : prix et montants → <strong>2 décimales</strong> · Taux → <strong>2 décimales</strong> · Quantités entières → <strong>0 décimale</strong></span></div>
+      <div style="margin-top:10px;font-size:13px;color:var(--text-sec)">
+        Exemples : 3,456 → <strong>3,46</strong> (le 6 ≥ 5 donc on monte) · 7,123 → <strong>7,12</strong> (le 3 &lt; 5 donc on descend) · 14,555 → <strong>14,56</strong>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 21 — Arrondi simple</div>
+      <div class="q-label">Arrondi à 2 décimales : <strong>12,3456</strong></div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q21"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 22 — Arrondi simple</div>
+      <div class="q-label">Arrondi à 2 décimales : <strong>8,7891</strong></div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q22"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 23 — Arrondi à l'entier</div>
+      <div class="q-label">Arrondi à l'entier le plus proche : <strong>47,6</strong></div>
+      <div class="q-input-row"><input type="number" id="q23"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 24 — Contexte TVA</div>
+      <div class="q-label">Un PVHT de <strong>38,333... €</strong> (résultat d'un calcul). Quel est le prix arrondi à 2 décimales ?</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q24"><span class="unit">€</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 25 — Arrondi en situation réelle</div>
+      <div class="q-label">Tu calcules un PVHT = <strong>250 ÷ 0,65</strong>. Effectue le calcul et donne le résultat arrondi à 2 décimales.</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q25"><span class="unit">€</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 26 — Sens de l'arrondi</div>
+      <div class="q-label">Le résultat d'un calcul de TVA est <strong>14,5450 €</strong>. Arrondi à 2 décimales, cela donne :</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q26"><span class="unit">€</span></div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-ghost" onclick="goTo('screen-p4')">&#8592; Retour</button>
+      <span class="nav-step">Partie 5 sur 6</span>
+      <button class="btn btn-primary" onclick="tryNext('screen-p6',['q21','q22','q23','q24','q25','q26'])">Suivant &#8594;</button>
+    </div>
+    <div class="err-msg" id="err-p5"></div>
+  </div>
+</div>
+
+<!-- ======= PARTIE 6 : SYNTHESE ======= -->
+<div class="screen" id="screen-p6">
+  <div class="section-card">
+    <span class="tag tag-synthese">&#127942; Partie 6 / 6 — Cas de synthèse</span>
+    <div class="section-title">Mission complète chez TechStyle</div>
+    <div class="section-desc">Pour finir, un cas complet qui mélange toutes les notions. Un client veut acheter un smartphone. À toi de gérer l'ensemble de la transaction. <strong>Arrondi à 2 décimales</strong> pour chaque réponse.</div>
+    <div class="formula">
+      <div class="formula-title">Rappel des formules essentielles</div>
+      <div class="formula-row">TTC = HT × 1,20 &nbsp;·&nbsp; HT = TTC ÷ 1,20</div>
+      <div class="formula-row">Marge = PVHT − PAHT</div>
+      <div class="formula-row">Taux de marque = Marge ÷ PVHT × 100</div>
+      <div class="formula-row">PVHT = PAHT ÷ (1 − taux de marque)</div>
+      <div class="formula-row">Taux d'évolution = (VF − VI) ÷ VI × 100</div>
+    </div>
+
+    <div style="background:#f9f8f5;border:0.5px solid var(--border-med);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:18px;font-size:14px;line-height:1.7;color:var(--text-sec)">
+      TechStyle achète un smartphone au fournisseur pour <strong style="color:var(--text)">250 € HT</strong>. Il fixe un <strong style="color:var(--text)">taux de marque de 35 %</strong>. Un client veut l'acheter et négocie une <strong style="color:var(--text)">remise de 5 %</strong> sur le PVHT. Tous les résultats sont à arrondir à 2 décimales.
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 27a</div>
+      <div class="q-label">Quel est le <strong>PVHT</strong> avant remise ?</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q27a"><span class="unit">€</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 27b</div>
+      <div class="q-label">Quel est le <strong>PVHT après remise de 5 %</strong> ?</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q27b"><span class="unit">€</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 27c</div>
+      <div class="q-label">Quel est le <strong>prix TTC</strong> payé par le client ? (TVA 20 %)</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q27c"><span class="unit">€</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 27d</div>
+      <div class="q-label">Quelle est la <strong>marge réelle</strong> de TechStyle après la remise accordée ?</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q27d"><span class="unit">€</span></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 27e</div>
+      <div class="q-label">Le mois dernier, TechStyle avait vendu ce modèle <strong>18 fois</strong>. Ce mois-ci, il en vend <strong>24</strong>. Quel est le <strong>taux d'évolution des ventes</strong> ? (arrondi à 2 décimales)</div>
+      <div class="q-input-row"><input type="number" step="0.01" id="q27e"><span class="unit">%</span></div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn btn-ghost" onclick="goTo('screen-p5')">&#8592; Retour</button>
+      <span class="nav-step">Dernière partie !</span>
+      <button class="btn btn-primary" onclick="trySubmit()" style="font-size:15px;padding:12px 24px;">Voir mon bilan &#8594;</button>
+    </div>
+    <div class="err-msg" id="err-p6"></div>
+  </div>
+</div>
+
+<!-- ======= RÉSULTATS ======= -->
+<div class="screen" id="screen-results">
+  <div class="section-card score-hero">
+    <div class="score-circle" id="scoreCircle">
+      <div class="score-pct" id="scorePct">—</div>
+      <div class="score-sub">réussite</div>
+    </div>
+    <div class="mention-text" id="mentionTxt">—</div>
+    <div class="note-text" id="noteTxt">—</div>
+  </div>
+
+  <div class="section-card">
+    <div class="stats-row">
+      <div class="stat-box s-green"><div class="stat-val" id="nbOk">—</div><div class="stat-lbl">Bonnes réponses</div></div>
+      <div class="stat-box s-red"><div class="stat-val" id="nbKo">—</div><div class="stat-lbl">Erreurs</div></div>
+      <div class="stat-box s-amber"><div class="stat-val" id="nbSkip">—</div><div class="stat-lbl">Non répondus</div></div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title" style="margin-bottom:16px;">Correction détaillée</div>
+    <div class="correction-list" id="corrList"></div>
+  </div>
+
+  <div style="text-align:center;margin-top:20px;">
+    <button class="btn btn-primary" onclick="resetAll()" style="font-size:15px;padding:12px 28px;">&#8635; Recommencer l'exercice</button>
+  </div>
+</div>
+
+</div><!-- end .app -->
+
+<script>
+const ANSWERS = {
+  q1:   58.80,
+  q2:   80.00,
+  q3:   0.40,
+  q4:   72.00,
+  q5a:  30.00,
+  q5b:  6.00,
+  q6:   102.00,
+  q7:   12.50,
+  q8:   100.00,
+  q9:   171.00,
+  q10:  52.80,
+  q11:  18.00,
+  q12:  150.00,
+  q13:  60.00,
+  q14:  41.67,
+  q15:  12.00,
+  q16:  32.00,
+  q17:  10.00,
+  q18:  210,
+  q19:  1200,
+  q20:  3312.00,
+  q21:  12.35,
+  q22:  8.79,
+  q23:  48,
+  q24:  38.33,
+  q25:  384.62,
+  q26:  14.55,
+  q27a: 384.62,
+  q27b: 365.38,
+  q27c: 438.46,
+  q27d: 115.38,
+  q27e: 33.33
+};
+
+const LABELS = {
+  q1:   "Q1 — Prix TTC du jean (HT 49 €, TVA 20 %)",
+  q2:   "Q2 — Prix HT des baskets (TTC 96 €, TVA 20 %)",
+  q3:   "Q3 — Montant TVA du sandwich (TTC 4,40 €, TVA 10 %)",
+  q4:   "Q4 — Montant TVA du téléphone (HT 360 €, TVA 20 %)",
+  q5a:  "Q5a — Prix HT de la chemise (TTC 36 €, TVA 20 %)",
+  q5b:  "Q5b — Montant TVA de la chemise",
+  q6:   "Q6 — Prix HT du manteau après remise 15 % (initial 120 €)",
+  q7:   "Q7 — Taux de remise (remise 8 € sur 64 €)",
+  q8:   "Q8 — Prix initial de la veste soldée −25 % (prix actuel 75 €)",
+  q9:   "Q9 — Prix final après remises successives 10 % puis 5 % (initial 200 €)",
+  q10:  "Q10 — Prix TTC du sac après remise 20 % (HT 55 €, TVA 20 %)",
+  q11:  "Q11 — Marge brute du t-shirt (PA 12 €, PV 30 €)",
+  q12:  "Q12 — Taux de marge du t-shirt",
+  q13:  "Q13 — Taux de marque du t-shirt",
+  q14:  "Q14 — PVHT avec taux de marque 40 % (PA 25 €)",
+  q15:  "Q15 — Prix d'achat HT de la casquette (PV 22 €, marge 10 €)",
+  q16:  "Q16 — PVHT avec taux de marge 60 % (PA 20 €)",
+  q17:  "Q17 — Taux d'évolution du CA (8 500 € → 9 350 €)",
+  q18:  "Q18 — Nombre de clients en avril (240 − 12,5 %)",
+  q19:  "Q19 — Stock initial (actuel 1 260, hausse 5 %)",
+  q20:  "Q20 — CA de juillet (juin 2 880 €, +15 %)",
+  q21:  "Q21 — Arrondi à 2 décimales : 12,3456",
+  q22:  "Q22 — Arrondi à 2 décimales : 8,7891",
+  q23:  "Q23 — Arrondi à l'entier : 47,6",
+  q24:  "Q24 — Arrondi à 2 décimales : 38,333...",
+  q25:  "Q25 — 250 ÷ 0,65 arrondi à 2 décimales",
+  q26:  "Q26 — Arrondi à 2 décimales : 14,5450",
+  q27a: "Q27a — PVHT du smartphone avant remise (PA 250 €, taux marque 35 %)",
+  q27b: "Q27b — PVHT après remise 5 %",
+  q27c: "Q27c — Prix TTC payé par le client",
+  q27d: "Q27d — Marge réelle après remise",
+  q27e: "Q27e — Taux d'évolution des ventes (18 → 24)"
+};
+
+const EXPLANATIONS = {
+  q1:   "49 × 1,20 = 58,80 €",
+  q2:   "96 ÷ 1,20 = 80,00 €",
+  q3:   "4,40 ÷ 1,10 = 4,00 € HT  →  4,00 × 0,10 = 0,40 €",
+  q4:   "360 × 0,20 = 72,00 €",
+  q5a:  "36 ÷ 1,20 = 30,00 €",
+  q5b:  "30 × 0,20 = 6,00 €",
+  q6:   "120 × (1 − 0,15) = 120 × 0,85 = 102,00 €",
+  q7:   "(8 ÷ 64) × 100 = 12,50 %",
+  q8:   "75 ÷ 0,75 = 100,00 €",
+  q9:   "200 × 0,90 = 180  →  180 × 0,95 = 171,00 €",
+  q10:  "55 × 0,80 = 44 € HT  →  44 × 1,20 = 52,80 €",
+  q11:  "30 − 12 = 18,00 €",
+  q12:  "(18 ÷ 12) × 100 = 150,00 %",
+  q13:  "(18 ÷ 30) × 100 = 60,00 %",
+  q14:  "25 ÷ (1 − 0,40) = 25 ÷ 0,60 = 41,666... → arrondi : 41,67 €",
+  q15:  "22 − 10 = 12,00 €",
+  q16:  "Marge = 20 × 0,60 = 12 €  →  PV = 20 + 12 = 32,00 €",
+  q17:  "((9350 − 8500) ÷ 8500) × 100 = (850 ÷ 8500) × 100 = 10,00 %",
+  q18:  "240 × (1 − 0,125) = 240 × 0,875 = 210 clients",
+  q19:  "1260 ÷ 1,05 = 1 200 articles",
+  q20:  "2880 × 1,15 = 3 312,00 €",
+  q21:  "12,3456 → 3e décimale = 5 ≥ 5 → on monte → 12,35",
+  q22:  "8,7891 → 3e décimale = 9 ≥ 5 → on monte → 8,79",
+  q23:  "47,6 → chiffre après virgule = 6 ≥ 5 → on monte → 48",
+  q24:  "38,333... → 3e décimale = 3 < 5 → on descend → 38,33 €",
+  q25:  "250 ÷ 0,65 = 384,6153...  → 3e décimale = 1 < 5 → 384,62 €",
+  q26:  "14,5450 → 3e décimale = 5 ≥ 5 → on monte → 14,55 €",
+  q27a: "250 ÷ (1 − 0,35) = 250 ÷ 0,65 = 384,6153... → 384,62 €",
+  q27b: "384,62 × 0,95 = 365,389 → 365,38 €",
+  q27c: "365,38 × 1,20 = 438,456 → 438,46 €",
+  q27d: "365,38 − 250 = 115,38 €",
+  q27e: "((24 − 18) ÷ 18) × 100 = (6 ÷ 18) × 100 = 33,333... → 33,33 %"
+};
+
+const SCREENS_ORDER = ['screen-intro','screen-p1','screen-p2','screen-p3','screen-p4','screen-p5','screen-p6','screen-results'];
+const PROGRESS_MAP = {'screen-intro':0,'screen-p1':14,'screen-p2':28,'screen-p3':43,'screen-p4':57,'screen-p5':71,'screen-p6':85,'screen-results':100};
+const PROGRESS_LABELS = {
+  'screen-intro':'Introduction',
+  'screen-p1':'Partie 1 — TVA',
+  'screen-p2':'Partie 2 — Remises',
+  'screen-p3':'Partie 3 — Marges',
+  'screen-p4':'Partie 4 — Évolution',
+  'screen-p5':'Partie 5 — Arrondis',
+  'screen-p6':'Partie 6 — Synthèse',
+  'screen-results':'Bilan final'
+};
+
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById('progressFill').style.width = (PROGRESS_MAP[id] || 0) + '%';
+  document.getElementById('progressText').textContent = PROGRESS_LABELS[id] || '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function submitAll() {
+  let ok = 0, ko = 0, skip = 0;
+  const TOTAL = Object.keys(ANSWERS).length;
+  const items = [];
+
+  for (const [qid, expected] of Object.entries(ANSWERS)) {
+    const el = document.getElementById(qid);
+    if (!el) continue;
+    const raw = el.value.trim();
+    const lbl = LABELS[qid] || qid;
+    const expl = EXPLANATIONS[qid] || '';
+
+    if (raw === '') {
+      skip++;
+      el.className = '';
+      items.push({ status: 'skip', lbl, expected, expl, yours: null });
+    } else {
+      const val = parseFloat(raw.replace(',', '.'));
+      const isOk = Math.abs(val - expected) < 0.06;
+      if (isOk) {
+        ok++;
+        el.className = 'correct';
+        items.push({ status: 'ok', lbl, expected, expl, yours: val });
+      } else {
+        ko++;
+        el.className = 'wrong';
+        items.push({ status: 'ko', lbl, expected, expl, yours: val });
+      }
+    }
+  }
+
+  const pct = Math.round((ok / TOTAL) * 100);
+  const note = (ok / TOTAL * 20).toFixed(1);
+
+  let mention = '', mcolor = '';
+  if (pct >= 90) { mention = 'Excellent — tu maîtrises les pourcentages !'; mcolor = '#0F6E56'; }
+  else if (pct >= 70) { mention = 'Très bien — continue sur cette lancée !'; mcolor = '#185FA5'; }
+  else if (pct >= 50) { mention = 'Pas mal — quelques formules à retravailler.'; mcolor = '#854F0B'; }
+  else { mention = 'À retravailler — relis les formules et réessaie !'; mcolor = '#A32D2D'; }
+
+  const scoreCircle = document.getElementById('scoreCircle');
+  scoreCircle.style.borderColor = mcolor;
+  document.getElementById('scorePct').style.color = mcolor;
+  document.getElementById('scorePct').textContent = pct + ' %';
+  document.getElementById('mentionTxt').textContent = mention;
+  document.getElementById('mentionTxt').style.color = mcolor;
+  document.getElementById('noteTxt').textContent = 'Note : ' + note + ' / 20  ·  ' + ok + ' bonnes réponses sur ' + TOTAL;
+  document.getElementById('nbOk').textContent = ok;
+  document.getElementById('nbKo').textContent = ko;
+  document.getElementById('nbSkip').textContent = skip;
+
+  const corrHtml = items.map(item => {
+    if (item.status === 'ok') {
+      return `<div class="corr-item ok">
+        <div class="corr-qnum">${item.lbl}</div>
+        <div class="corr-your ok-mark">&#10003; Bonne réponse : ${item.yours}</div>
+        <div class="corr-expl">Calcul : ${item.expl}</div>
+      </div>`;
+    } else if (item.status === 'ko') {
+      return `<div class="corr-item ko">
+        <div class="corr-qnum">${item.lbl}</div>
+        <div class="corr-your ko-mark">&#10007; Ta réponse : ${item.yours}</div>
+        <div class="corr-answer">&#10003; Réponse correcte : ${item.expected}</div>
+        <div class="corr-expl">Calcul : ${item.expl}</div>
+      </div>`;
+    } else {
+      return `<div class="corr-item skip">
+        <div class="corr-qnum">${item.lbl}</div>
+        <div class="corr-your" style="color:var(--text-hint)">— Non répondu</div>
+        <div class="corr-answer">&#10003; Réponse correcte : ${item.expected}</div>
+        <div class="corr-expl">Calcul : ${item.expl}</div>
+      </div>`;
+    }
+  }).join('');
+
+  document.getElementById('corrList').innerHTML = corrHtml;
+  goTo('screen-results');
+}
+
+
+function tryNext(target, ids) {
+  const missing = ids.filter(id => {
+    const el = document.getElementById(id);
+    return el && el.value.trim() === '';
+  });
+  // find err-msg for current screen
+  const currentScreen = document.querySelector('.screen.active');
+  const errEl = currentScreen ? currentScreen.querySelector('.err-msg') : null;
+  if (missing.length > 0) {
+    if (errEl) errEl.textContent = '⚠ Remplis toutes les cases avant de passer à la suite (' + missing.length + ' réponse(s) manquante(s)).';
+    // highlight missing
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.value.trim() === '') el.style.borderColor = 'var(--red)';
+      else if (el) el.style.borderColor = '';
+    });
+    return;
+  }
+  if (errEl) errEl.textContent = '';
+  ids.forEach(id => { const el = document.getElementById(id); if (el) el.style.borderColor = ''; });
+  goTo(target);
+}
+
+function trySubmit() {
+  const ids = ['q27a','q27b','q27c','q27d','q27e'];
+  const missing = ids.filter(id => {
+    const el = document.getElementById(id);
+    return el && el.value.trim() === '';
+  });
+  const errEl = document.getElementById('err-p6');
+  if (missing.length > 0) {
+    if (errEl) errEl.textContent = '⚠ Remplis toutes les cases avant de voir le bilan (' + missing.length + ' réponse(s) manquante(s)).';
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.value.trim() === '') el.style.borderColor = 'var(--red)';
+      else if (el) el.style.borderColor = '';
+    });
+    return;
+  }
+  if (errEl) errEl.textContent = '';
+  submitAll();
+}
+function resetAll() {
+  document.querySelectorAll('input[type=number]').forEach(i => { i.value = ''; i.className = ''; });
+  goTo('screen-intro');
+}
+</script>
+</body>
+</html>
